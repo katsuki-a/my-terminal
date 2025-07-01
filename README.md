@@ -1,73 +1,63 @@
-# iTerm2 + zsh + Prezto 環境構築手順
+# iTerm2 + zsh + Prezto Environment Setup
 
-macOS向けのモダンなターミナル環境を構築するための手順書です。
-`setup.sh`スクリプトを実行することで、これらの設定を自動的に適用できます。
+This repository provides a script to automate the setup of a modern and efficient terminal environment on macOS.
 
-## 特徴
+## Features
 
-- **iTerm2**: macOS標準のターミナルよりも高機能なターミナルエミュレータ
-- **zsh**: 現在のmacOSでデフォルトの強力なシェル
-- **Prezto**: zshを使いやすくするための設定フレームワーク
-- **Iceberg**: 目に優しいダークなカラーテーマ
-- **Pure**: シンプルで美しいプロンプトテーマ
-- **Syntax Highlighting**: コマンドの構文をハイライト
-- **Autosuggestions**: コマンド履歴に基づいて入力候補を提示
+- **iTerm2**: A feature-rich replacement for the standard macOS terminal.
+- **zsh**: A powerful shell, the default in modern macOS versions.
+- **Prezto**: A configuration framework for zsh that makes it faster and easier to use.
+- **Pure**: A clean, beautiful, and minimal prompt for zsh.
+- **Syntax Highlighting**: Highlights commands in the shell, making them easier to read and debug.
+- **Autosuggestions**: Suggests commands as you type based on your history.
+- **Automated & Idempotent Script**: The setup script is safe to run multiple times, automatically checking for existing installations and configurations.
 
-## 前提条件
+## Prerequisites
 
-- macOS環境であること
-- [Homebrew](https://brew.sh/ja/)がインストール済みであること
-- シェルが`zsh`であること（macOS Catalina以降のデフォルト）
+Before running the setup script, please ensure you have the following installed:
 
-## 自動セットアップ
+- **macOS**: The script is designed specifically for macOS.
+- **Homebrew**: The missing package manager for macOS. If not installed, get it from [https://brew.sh](https://brew.sh).
+- **Git**: A version control system. Can be installed via `brew install git`.
+- **zsh**: Should be your default shell (default on macOS Catalina and later).
 
-1.  リポジトリをクローンまたはダウンロードします。
-2.  ターミナルでリポジトリのディレクトリに移動します。
-3.  以下のコマンドを実行して、セットアップスクリプトに実行権限を付与します。
+## Automatic Setup
 
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/your-username/my-terminal.git
+    cd my-terminal
+    ```
+
+2.  **Make the script executable:**
     ```bash
     chmod +x setup.sh
     ```
 
-4.  スクリプトを実行します。
-
+3.  **Run the script:**
     ```bash
     ./setup.sh
     ```
 
-5.  スクリプトの指示に従ってください。Icebergテーマの適用など、一部手動での操作が必要です。
-6.  完了後、ターミナルを再起動するか、以下のコマンドを実行すると設定が反映されます。
+4.  **Follow the on-screen instructions.** The script will inform you of its progress. A manual step is required to apply the iTerm2 color theme.
 
-    ```bash
-    source ~/.zshrc
-    ```
+5.  **Restart your terminal** or run `source ~/.zshrc` to apply all changes.
 
-## 手動での設定内容
+## What the Script Automates
 
-`setup.sh`は以下の手順を自動化したものです。
+The `setup.sh` script performs the following steps:
 
-1.  **iTerm2のインストール**
-    ```bash
-    brew install --cask iterm2
-    ```
-
-2.  **Icebergテーマのインストールと適用**
-    - [Iceberg for iTerm2](https://github.com/Arc0re/Iceberg-iTerm2)の指示に従い、テーマファイルをダウンロードしてiTerm2に設定します。
-
-3.  **Preztoのインストール**
-    - [Prezto](https://github.com/sorin-ionescu/prezto)の公式手順に従ってインストールします。
-
-4.  **Preztoプロンプトテーマの変更**
-    - `~/.zpreztorc`ファイルを開き、プロンプトのテーマを`sorin`から`pure`に変更します。
-      ```zsh
-      zstyle ':prezto:module:prompt' theme 'pure'
-      ```
-
-5.  **Preztoモジュールの追加**
-    - `~/.zpreztorc`ファイルを開き、`pmodule`のリストに`syntax-highlighting`と`autosuggestions`を追加します。これらは`prompt`モジュールよりも前に読み込む必要があります。
-      ```zsh
-      zstyle ':prezto:load' pmodule \
-        'syntax-highlighting' \
-        'autosuggestions' \
-        ...
-      ```
+1.  **Prerequisite Check**: Verifies that Homebrew, Git, and zsh are available.
+2.  **Install iTerm2**: Installs iTerm2 via Homebrew if it's not already present.
+3.  **Install Iceberg Theme**:
+    - Downloads the [Iceberg for iTerm2](https://github.com/Arc0re/Iceberg-iTerm2) theme.
+    - Opens the theme file, which registers it in iTerm2.
+    - **You must manually apply the theme**: `iTerm2 -> Preferences -> Profiles -> Colors -> Color Presets... -> Select 'Iceberg'`.
+4.  **Install Prezto**:
+    - Clones the [Prezto repository](https://github.com/sorin-ionescu/prezto).
+    - Backs up any existing `~/.zsh*` configuration files.
+    - Creates symlinks for the necessary Prezto configuration files.
+5.  **Configure Prezto**:
+    - Modifies the `~/.zpreztorc` file to:
+      - Set the prompt theme to `pure`.
+      - Enable the `syntax-highlighting` and `autosuggestions` modules for a better interactive experience.
