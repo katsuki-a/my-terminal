@@ -152,15 +152,17 @@ configure_prezto() {
   if grep -q "pmodule.*syntax-highlighting" "$ZPREZTORC_PATH"; then
     success "Syntax highlighting and autosuggestions modules are already enabled."
   else
-    local temp_file=$(mktemp)
-    # Use awk to insert modules after the pmodule list definition line
+    # Use awk to insert modules before the 'prompt' module line.
+    # This is more robust and respects the recommended loading order.
+    local temp_file
+    temp_file=$(mktemp)
     awk '
-      /zstyle ':prezto:load' pmodule/ {
-        print;
-        print "  'syntax-highlighting' \\n";
-        print "  'autosuggestions' \\n";
-        next
+      # If we find the prompt line, print our new modules first.
+      /^\s*\'prompt\'/ {
+        print "  \'syntax-highlighting\' \\";
+        print "  \'autosuggestions\' \\";
       }
+      # Print every original line.
       { print }
     ' "$ZPREZTORC_PATH" > "$temp_file" && mv "$temp_file" "$ZPREZTORC_PATH"
     success "Enabled syntax-highlighting and autosuggestions modules."
