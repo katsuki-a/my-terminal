@@ -16,7 +16,7 @@ macOS向けのモダンなターミナル環境を構築するための手順書
 ## 前提条件
 
 - macOS環境であること
-- [Homebrew](https://brew.sh/index_ja)がインストール済みであること
+- [Homebrew](https://brew.sh/ja/)がインストール済みであること
 - シェルが`zsh`であること（macOS Catalina以降のデフォルト）
 
 ## 自動セットアップ
